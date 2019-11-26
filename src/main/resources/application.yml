@@ -1,0 +1,22 @@
+server:
+  port: 8082
+
+spring:
+  profiles:
+    active: dev
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password:
+    database: 0
+    lettuce:
+      pool:
+        max-active: 32
+        max-wait: 300ms
+        max-idle: 16
+        min-idle: 8
+
+# redisson lock 单机模式
+redisson:
+  address: redis://127.0.0.1:6379
+  password:
