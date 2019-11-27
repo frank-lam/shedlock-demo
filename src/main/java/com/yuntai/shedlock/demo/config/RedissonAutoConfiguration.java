@@ -1,5 +1,8 @@
 package com.yuntai.shedlock.demo.config;
 
+import com.yuntai.shedlock.demo.lock.DistributedLocker;
+import com.yuntai.shedlock.demo.lock.RedissonDistributedLocker;
+import com.yuntai.shedlock.demo.util.DistributedLockUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
@@ -38,6 +41,18 @@ public class RedissonAutoConfiguration {
             serverConfig.setPassword(redissonProperties.getPassword());
         }
         return Redisson.create(config);
+    }
+
+    /**
+     * 装配locker类，并将实例注入到RedissLockUtil中
+     * @return
+     */
+    @Bean
+    DistributedLocker distributedLocker(RedissonClient redissonClient) {
+        DistributedLocker locker = new RedissonDistributedLocker();
+        ((RedissonDistributedLocker) locker).setRedissonClient(redissonClient);
+        DistributedLockUtil.setLocker(locker);
+        return locker;
     }
 
 }

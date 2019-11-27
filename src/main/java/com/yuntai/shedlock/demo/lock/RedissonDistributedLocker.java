@@ -1,10 +1,12 @@
 package com.yuntai.shedlock.demo.lock;
 
+import lombok.Data;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.concurrent.TimeUnit;
 
+@Data
 public class RedissonDistributedLocker implements DistributedLocker {
 
     @Autowired

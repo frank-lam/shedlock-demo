@@ -2,13 +2,11 @@ package com.yuntai.shedlock.demo.util;
 
 import com.yuntai.shedlock.demo.lock.DistributedLocker;
 import org.redisson.api.RLock;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.concurrent.TimeUnit;
 
 public class DistributedLockUtil {
 
-    @Autowired
     private static DistributedLocker redissLock;
 
     public static void setLocker(DistributedLocker locker) {
