@@ -57,6 +57,7 @@ public class DistributedLockController {
 
         DistributedLockUtil.lock("LOCK:1001", TimeUnit.SECONDS,5);
         try {
+            log.info("Get Lock>>>>>>>>>>>>>>>>>>>");
             doSomething();
         } catch (Exception e) {
             log.error("Redisson 获取分布式锁异常,异常信息:{}",e);
