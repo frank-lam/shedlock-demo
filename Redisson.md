@@ -107,7 +107,7 @@ public class RedissonAutoConfiguration {
 }
 ```
 ### 步骤三：使用，这里写测试逻辑
->>> 说明：doSomething();方法是一个计数的测试方法，用于测试是否所有请求都串行执行。在这里，作者在redis中存放一个数据，用于模拟数据库。
+> 说明：doSomething();方法是一个计数的测试方法，用于测试是否所有请求都串行执行。在这里，作者在redis中存放一个数据，用于模拟数据库。
 ```
     @Autowired
     private RedissonClient redissonClient;
@@ -134,7 +134,7 @@ public class RedissonAutoConfiguration {
 ## 方式二：封装工具类实现
 > 仅仅是对Redisson原生API的封装，提供了更易于使用的接口
 ### 步骤一：定义Lock接口
->>> 锁可以有不同的实现，除了这里的Redisson，还有基于zk、数据库等的实现，故抽象出接口
+> 锁可以有不同的实现，除了这里的Redisson，还有基于zk、数据库等的实现，故抽象出接口
 ```
 public interface DistributedLocker {
     RLock lock(String lockKey);
