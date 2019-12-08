@@ -20,3 +20,9 @@ spring:
 redisson:
   address: redis://127.0.0.1:6379
   password:
+
+#哨兵模式
+#redisson
+#  master-name: master
+#  password :
+#  sentinel-addresses : 127.0.0.1:6379,127.0.0.1:6378
