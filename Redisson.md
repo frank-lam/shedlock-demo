@@ -297,6 +297,6 @@ public class DistributedLockUtil {
 ## 总结
 根据业务选择合适的分布式锁，Redisson更适用于对数据一致性要求不是很苛刻的场景中。
 ## 引用
-[https://github.com/redisson/redisson/wiki/2.-%E9%85%8D%E7%BD%AE%E6%96%B9%E6%B3%95](https://github.com/redisson/redisson/wiki/2.-%E9%85%8D%E7%BD%AE%E6%96%B9%E6%B3%95)
-[https://juejin.im/post/5da16f0ee51d4578331cbd2d](https://juejin.im/post/5da16f0ee51d4578331cbd2d)
+[https://github.com/redisson/redisson/wiki/2.-%E9%85%8D%E7%BD%AE%E6%96%B9%E6%B3%95](https://github.com/redisson/redisson/wiki/2.-%E9%85%8D%E7%BD%AE%E6%96%B9%E6%B3%95)  
+[https://juejin.im/post/5da16f0ee51d4578331cbd2d](https://juejin.im/post/5da16f0ee51d4578331cbd2d)  
 [https://my.oschina.net/u/3959468/blog/2251918](https://my.oschina.net/u/3959468/blog/2251918)
