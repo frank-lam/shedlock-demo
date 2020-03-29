@@ -49,6 +49,7 @@ public class SimpleTask {
 }
 ```
 ### @SchedulerLock属性说明
+- name属性，锁的名称，同名情况下，其保证同一时间只能执行一个任务。
 - lockAtMostFor属性，该属性指定在执行节点死亡时应将锁保留多长时间。这只是一个后备，在正常情况下，任务完成后立即释放锁定。您必须将lockAtMostFor设置为比正常执行时间长得多的值。如果任务花费的时间超过lockAtMostFor，则结果可能是不可预测的（其他进程将很可能持有该锁）。如果未在@SchedulerLock中指定lockAtMostFor，则将使用@EnableSchedulerLock中的默认值。
 - lockAtLeastFor属性，该属性指定应保留锁定的最短时间。其主要目的是在任务很短且节点之间的时钟差的情况下，防止从多个节点执行。
 ## 步骤五：Jmeter测试
