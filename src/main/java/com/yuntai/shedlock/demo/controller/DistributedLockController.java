@@ -34,29 +34,30 @@ public class DistributedLockController {
         RLock lock = redissonClient.getLock("LOCK:1001");
         try {
             lock.lock(5, TimeUnit.SECONDS);
-            log.info("Get Lock>>>>>>>>>>>>>>>>>>>");
+            //log.info("Get Lock>>>>>>>>>>>>>>>>>>>");
             doSomething();
         } catch (Exception e) {
             log.error("Redisson 获取分布式锁异常,异常信息:{}", e);
         } finally {
             lock.unlock();
-            log.info("Release Lock>>>>>>>>>>>>>>>>>>>");
+            //log.info("Release Lock>>>>>>>>>>>>>>>>>>>");
         }
     }
 
     @GetMapping("/testUtil")
-    public void testUtil() {
+    public void testUtil() throws InterruptedException {
 
-        DistributedLockUtil.lock("LOCK:1001", TimeUnit.SECONDS, 5).tryLock();
+        boolean b = DistributedLockUtil.lock("LOCK:1001", TimeUnit.SECONDS, 5).tryLock(1,TimeUnit.SECONDS);
+        log.info("线程：{},加锁结果：{}",Thread.currentThread().getName(),b);
         try {
-            log.info("Get Lock>>>>>>>>>>>>>>>>>>>");
+            //log.info("Get Lock>>>>>>>>>>>>>>>>>>>");
             doSomething();
         } catch (Exception e) {
             log.error("Redisson 获取分布式锁异常,异常信息:{}", e);
         } finally {
             //如果演示的话需要注释该代码;实际应该放开
             DistributedLockUtil.unlock("LOCK:1001");
-            log.info("Redisson分布式锁释放锁:{},ThreadName :{}", "LOCK:1001", Thread.currentThread().getName());
+            //log.info("Redisson分布式锁释放锁:{},ThreadName :{}", "LOCK:1001", Thread.currentThread().getName());
         }
     }
 
@@ -72,7 +73,7 @@ public class DistributedLockController {
         flag = flag - 1;
 
         redisOperations.boundValueOps("lock:flag").set(flag.toString());
-        log.info("do something>>>>>>>>>>>>>{}", redisOperations.boundValueOps("lock:flag").get());
+        log.info("do something---------------{}", redisOperations.boundValueOps("lock:flag").get());
     }
 
 }

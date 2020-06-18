@@ -23,8 +23,8 @@ public class SimpleTask {
     String port;
 
     //为了方便测试 设置cron表达式
-    @Scheduled(cron = "*/5 * * * * ?")
-    @SchedulerLock(name="simpleTask",lockAtLeastFor = 1*1000)
+    //@Scheduled(cron = "*/5 * * * * ?")
+    //@SchedulerLock(name="simpleTask",lockAtLeastFor = 1*1000)
     public void getCurrentDate() {
         log.info("端口({}),Scheduled定时任务执行：{}", port, new Date());
     }

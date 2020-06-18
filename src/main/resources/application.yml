@@ -11,7 +11,7 @@ spring:
     database: 0
     lettuce:
       pool:
-        max-active: 32
+        max-active: 100
         max-wait: 300ms
         max-idle: 16
         min-idle: 8
