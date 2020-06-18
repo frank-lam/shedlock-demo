@@ -47,7 +47,7 @@ public class DistributedLockController {
     @GetMapping("/testUtil")
     public void testUtil() {
 
-        DistributedLockUtil.lock("LOCK:1001", TimeUnit.SECONDS, 5);
+        DistributedLockUtil.lock("LOCK:1001", TimeUnit.SECONDS, 5).tryLock();
         try {
             log.info("Get Lock>>>>>>>>>>>>>>>>>>>");
             doSomething();
