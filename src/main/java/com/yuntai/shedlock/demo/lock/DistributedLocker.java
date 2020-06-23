@@ -6,13 +6,13 @@ import java.util.concurrent.TimeUnit;
 
 public interface DistributedLocker {
 
-    RLock lock(String lockKey);
+    void lock(String lockKey);
 
-    RLock lock(String lockKey, int timeout);
+    void lock(String lockKey, long timeout);
 
-    RLock lock(String lockKey, TimeUnit unit, int timeout);
+    void lock(String lockKey, long timeout, TimeUnit unit);
 
-    boolean tryLock(String lockKey, TimeUnit unit, int waitTime, int leaseTime);
+    boolean tryLock(String lockKey, long waitTime, long leaseTime, TimeUnit unit);
 
     void unlock(String lockKey);
 

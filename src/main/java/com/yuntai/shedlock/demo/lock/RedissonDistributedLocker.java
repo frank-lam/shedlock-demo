@@ -1,40 +1,39 @@
 package com.yuntai.shedlock.demo.lock;
 
-import lombok.Data;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import java.util.concurrent.TimeUnit;
 
-@Data
 public class RedissonDistributedLocker implements DistributedLocker {
 
-    @Autowired
     private RedissonClient redissonClient;
 
+    public RedissonDistributedLocker(RedissonClient redissonClient) {
+        this.redissonClient = redissonClient;
+    }
+
+
     @Override
-    public RLock lock(String lockKey) {
+    public void lock(String lockKey) {
         RLock lock = redissonClient.getLock(lockKey);
         lock.lock();
-        return lock;
     }
 
     @Override
-    public RLock lock(String lockKey, int leaseTime) {
+    public void lock(String lockKey, long timeout) {
         RLock lock = redissonClient.getLock(lockKey);
-        lock.lock(leaseTime, TimeUnit.SECONDS);
-        return lock;
+        lock.lock(timeout, TimeUnit.SECONDS);
     }
 
     @Override
-    public RLock lock(String lockKey, TimeUnit unit, int timeout) {
+    public void lock(String lockKey, long timeout, TimeUnit unit) {
         RLock lock = redissonClient.getLock(lockKey);
         lock.lock(timeout, unit);
-        return lock;
     }
 
     @Override
-    public boolean tryLock(String lockKey, TimeUnit unit, int waitTime, int leaseTime) {
+    public boolean tryLock(String lockKey, long waitTime, long leaseTime, TimeUnit unit) {
         RLock lock = redissonClient.getLock(lockKey);
         try {
             return lock.tryLock(waitTime, leaseTime, unit);
@@ -53,5 +52,4 @@ public class RedissonDistributedLocker implements DistributedLocker {
     public void unlock(RLock lock) {
         lock.unlock();
     }
-
 }

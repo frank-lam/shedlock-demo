@@ -1,5 +1,6 @@
 package com.yuntai.shedlock.demo.controller;
 
+import com.yuntai.shedlock.demo.util.DistributedLockUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
@@ -39,30 +40,42 @@ public class DistributedLockController {
         }
     }
 
-    @GetMapping("/tryLock")
+    @GetMapping("/lockUtil")
     public void testUtil() throws InterruptedException {
-        RLock lock = redissonClient.getLock("LOCK:1001");
-        boolean b = lock.tryLock(1,5,TimeUnit.SECONDS);
-        lock.lock();
-        log.info("线程：{},加锁结果：{}",Thread.currentThread().getName(),b);
+        DistributedLockUtil.lock("LOCK:1001",5);
         try {
+            doSomething();
+        } catch (Exception e) {
+            log.error("Redisson 获取分布式锁异常,异常信息:{}", e);
+        } finally {
+            DistributedLockUtil.unlock("LOCK:1001");
+            //log.info("Redisson分布式锁释放锁:{},ThreadName :{}", "LOCK:1001", Thread.currentThread().getName());
+        }
+    }
+
+    @GetMapping("/tryLockUtil")
+    public void testUtil2() throws InterruptedException {
+        try {
+            boolean b = DistributedLockUtil.tryLock("LOCK:1001", 1, 5);
+            log.info("b = {},current Thread: {}",b,Thread.currentThread().getName());
             if (b) {
                 doSomething();
             }
         } catch (Exception e) {
             log.error("Redisson 获取分布式锁异常,异常信息:{}", e);
         } finally {
-            lock.unlock();
+            DistributedLockUtil.unlock("LOCK:1001");
             //log.info("Redisson分布式锁释放锁:{},ThreadName :{}", "LOCK:1001", Thread.currentThread().getName());
         }
     }
 
     @GetMapping("/test")
-    public void test() {
+    public void test() throws InterruptedException {
         doSomething();
     }
 
-    private void doSomething() {
+    private void doSomething() throws InterruptedException {
+        Thread.sleep(500);
         RedisOperations<String, String> redisOperations = redisTemplate.opsForValue().getOperations();
         String res = redisOperations.boundValueOps("lock:flag").get();
         Integer flag = Integer.parseInt(res);
